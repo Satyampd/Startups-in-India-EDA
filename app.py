@@ -138,8 +138,8 @@ def app():
     till recent 2020. It includes columns with the date funded, the city the 
     startup is based out of, the names of the funders, and the amount invested (in USD).
 
-    Note: This is just for educational purpose, as data is too ambigious, it should not
-    be used in other places.
+    Note:This is just for educational purposes, as data is too ambiguous, 
+    it should not be used in other places.
     """)
 
     
@@ -149,8 +149,10 @@ def app():
     top_filter = st.slider('Top N Industries', 3, 15, 5)  
     label=np.arange(0,top_filter)
     top=data["IndustryVertical"].value_counts().head(top_filter)
-    fig=go.Figure(data=[go.Bar(y=top.values,x=top.index,marker={'color':label})])
-    fig.update_layout(autosize=False,width=700,height=400)
+    fig=go.Figure(data=[go.Bar(y=top.values,x=top.index,marker={'color':top.values})])
+    fig.update_layout(autosize=False ,plot_bgcolor='rgb(275, 275, 275)')
+    fig.data[0].marker.line.width = 3
+    fig.data[0].marker.line.color = "black"  
     st.plotly_chart(fig)
 
 
@@ -159,7 +161,9 @@ def app():
     top=temp1.head(top_filter)
     label=np.arange(0,top_filter)
     fig=go.Figure(data=[go.Bar(y=top.AmountInUSD,x=top.index, marker={'color':label})])
-    fig.update_layout(autosize=False)
+    fig.update_layout(autosize=False ,plot_bgcolor='rgb(275, 275, 275)')
+    fig.data[0].marker.line.width = 3
+    fig.data[0].marker.line.color = "black" 
     st.plotly_chart(fig)
 
     st.subheader('Pie-chart for top 7 different type of Fundings!')
@@ -167,8 +171,10 @@ def app():
     colrs = ['gold', 'mediumturquoise', 'darkorange', 'lightgreen']
     fig=go.Figure(data=[go.Pie(labels=typ.index,values=typ.values)])
     fig.update_traces(hoverinfo='label+percent', textinfo='label+percent', textfont_size=10,
-                    marker=dict(colors=colrs))
-    fig.update_layout(autosize=False)
+                    marker=dict(colors=colrs), hole=.3,  pull=[0.1, 0,0, 0, 0, 0])                    
+    fig.data[0].marker.line.width = 3
+    fig.data[0].marker.line.color = "black"                
+    fig.update_layout(height=600,autosize=False ,plot_bgcolor='rgb(275, 275, 275)')
     st.plotly_chart(fig)
 
     st.subheader('Top Investors!')
@@ -179,7 +185,9 @@ def app():
     i.drop(0,axis=0,inplace=True)
     fig=go.Figure(data=[go.Scatter(x=i.InvestorsName,y=i.Number,mode='markers',marker_size=(i.Number)*3, 
                      marker={'color':label})])
-    fig.update_layout(autosize=False)
+    fig.update_layout(autosize=False ,plot_bgcolor='rgb(275, 275, 275)')
+    fig.data[0].marker.line.width = 3
+    fig.data[0].marker.line.color = "black" 
     st.plotly_chart(fig)
 
     st.subheader('Top Cities with Highest number of Startups!')
@@ -189,7 +197,9 @@ def app():
     cities.columns=["City","Number"]
     fig=go.Figure(data=[go.Scatter(x=cities.City,y=cities.Number,mode='markers',marker_size=(cities.Number)/6, 
      marker={'color':label})])
-    fig.update_layout(autosize=False)
+    fig.data[0].marker.line.width = 3
+    fig.data[0].marker.line.color = "black" 
+    fig.update_layout(autosize=True,plot_bgcolor='rgb(275, 275, 275)')
     st.plotly_chart(fig)
 
 
@@ -202,10 +212,19 @@ def app():
     plt.show()
     st.pyplot()
 
-    st.header("""
-    Hi there, if you have come so far, it shows your love for exploring things, this whole project is made using four open-source libraries pandas, numpy, plotly and streamlit. 
-    Via - Satyampd(Username for Github, Kaggle and LinkedIn)""")
+    st.subheader("""
 
+
+
+
+
+
+
+
+
+    Hi there, if you have come so far, it shows your love for exploring things, this whole project is made using four open-source libraries pandas, numpy, plotly and streamlit. 
+    """)
+    st.subheader("Via - Satyampd(Username for Github, Kaggle and LinkedIn)")
     print("Run Completed")      
 
 
